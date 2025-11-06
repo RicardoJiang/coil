@@ -1,5 +1,6 @@
 package coil3
 
+import coil3.decode.SkiaImageDecoder
 import coil3.map.NSURLMapper
 
 internal actual fun ComponentRegistry.Builder.addAppleComponents(
@@ -8,4 +9,6 @@ internal actual fun ComponentRegistry.Builder.addAppleComponents(
     return this
         // Mappers
         .add(NSURLMapper())
+        // Decoders
+        .add(SkiaImageDecoder.Factory())
 }

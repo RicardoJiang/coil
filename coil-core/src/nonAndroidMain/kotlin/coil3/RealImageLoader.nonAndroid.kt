@@ -27,7 +27,6 @@ internal actual inline fun transition(
 internal actual fun ComponentRegistry.Builder.addAndroidComponents(
     options: RealImageLoader.Options,
 ): ComponentRegistry.Builder {
+    // Non-Android platforms don't have Android components
     return this
-        // Decoders
-        .add(SkiaImageDecoder.Factory())
 }

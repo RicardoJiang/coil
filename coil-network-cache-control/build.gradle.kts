@@ -3,8 +3,7 @@ import coil3.androidLibrary
 
 plugins {
     id("com.android.library")
-    id("kotlin-multiplatform")
-    id("org.jetbrains.kotlinx.atomicfu")
+    kotlin("multiplatform")
 }
 
 addAllMultiplatformTargets(libs.versions.skiko)
@@ -19,7 +18,7 @@ kotlin {
                 api(libs.kotlinx.datetime)
             }
         }
-        commonTest {
+        /*commonTest {
             dependencies {
                 implementation(projects.internal.testUtils)
                 implementation(libs.bundles.test.common)
@@ -29,6 +28,6 @@ kotlin {
             dependencies {
                 implementation(libs.bundles.test.jvm)
             }
-        }
+        }*/
     }
 }

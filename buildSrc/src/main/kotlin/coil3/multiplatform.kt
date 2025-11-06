@@ -23,9 +23,9 @@ fun Project.addAllMultiplatformTargets(skikoVersion: Provider<String>, enableWas
                 }
             }
 
-            jvm()
+            //jvm()
 
-            js {
+            /*js {
                 browser()
                 nodejs {
                     testTask {
@@ -36,9 +36,9 @@ fun Project.addAllMultiplatformTargets(skikoVersion: Provider<String>, enableWas
                 }
                 binaries.executable()
                 binaries.library()
-            }
+            }*/
 
-            if (enableWasm) {
+            /*if (enableWasm) {
                 @OptIn(ExperimentalWasmDsl::class)
                 wasmJs {
                     // TODO: Fix wasm tests.
@@ -55,20 +55,21 @@ fun Project.addAllMultiplatformTargets(skikoVersion: Provider<String>, enableWas
                     binaries.executable()
                     binaries.library()
                 }
-            }
+            }*/
 
             iosX64()
             iosArm64()
             iosSimulatorArm64()
 
-            macosX64()
-            macosArm64()
+            //macosX64()
+            //macosArm64()
+            ohosArm64()
         }
 
-        applyKotlinJsImplicitDependencyWorkaround(enableWasm)
+        /*applyKotlinJsImplicitDependencyWorkaround(enableWasm)
         if (enableWasm) {
             createSkikoWasmJsRuntimeDependency(skikoVersion)
-        }
+        }*/
     }
 }
 

@@ -4,6 +4,6 @@ import kotlin.jvm.JvmField
 
 actual abstract class PlatformContext private constructor() {
     companion object {
-        @JvmField val INSTANCE = object : PlatformContext() {}
+        val INSTANCE = object : PlatformContext() {}
     }
 }

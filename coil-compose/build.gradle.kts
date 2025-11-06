@@ -3,8 +3,7 @@ import coil3.androidLibrary
 
 plugins {
     id("com.android.library")
-    id("kotlin-multiplatform")
-    id("org.jetbrains.kotlinx.atomicfu")
+    kotlin("multiplatform")
     id("org.jetbrains.compose")
     id("org.jetbrains.kotlin.plugin.compose")
 }

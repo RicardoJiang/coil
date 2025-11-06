@@ -11,7 +11,7 @@ import org.jetbrains.kotlin.gradle.plugin.KotlinSourceSetTree
 private val hierarchyTemplate = KotlinHierarchyTemplate {
     withSourceSetTree(
         KotlinSourceSetTree.main,
-        KotlinSourceSetTree.test,
+        //KotlinSourceSetTree.test,
     )
 
     common {
@@ -24,6 +24,8 @@ private val hierarchyTemplate = KotlinHierarchyTemplate {
         groupNonJvmCommon()
         groupNative()
         groupNonNative()
+        groupNonApple()
+        groupNonOhosArm64()
     }
 }
 
@@ -66,18 +68,35 @@ private fun KotlinHierarchyBuilder.groupNonJvmCommon() {
 private fun KotlinHierarchyBuilder.groupNative() {
     group("native") {
         withNative()
+        groupApple()
+        groupOhosArm64()
+    }
+}
 
-        group("apple") {
-            withApple()
+private fun KotlinHierarchyBuilder.groupApple() {
+    group("apple") {
+        withApple()
 
-            group("ios") {
-                withIos()
-            }
-
-            group("macos") {
-                withMacos()
-            }
+        group("ios") {
+            withIos()
         }
+
+        group("macos") {
+            withMacos()
+        }
+    }
+}
+
+private fun KotlinHierarchyBuilder.groupOhosArm64() {
+    group("ohosArm64") {
+        withOhosArm64()
+    }
+}
+
+private fun KotlinHierarchyBuilder.groupNonApple() {
+    group("nonApple") {
+        groupNonNative()
+        groupOhosArm64()
     }
 }
 
@@ -85,6 +104,13 @@ private fun KotlinHierarchyBuilder.groupNonNative() {
     group("nonNative") {
         groupJsCommon()
         groupJvmCommon()
+    }
+}
+
+private fun KotlinHierarchyBuilder.groupNonOhosArm64() {
+    group("nonOhosArm64") {
+        groupNonNative()
+        groupApple()
     }
 }
 

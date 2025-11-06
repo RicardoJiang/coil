@@ -12,12 +12,10 @@ actual typealias Bitmap = org.jetbrains.skia.Bitmap
 
 actual typealias Canvas = org.jetbrains.skia.Canvas
 
-@JvmOverloads
 actual fun Bitmap.asImage(shareable: Boolean): BitmapImage {
     return BitmapImage(this, shareable)
 }
 
-@JvmOverloads
 actual fun Image.toBitmap(
     width: Int,
     height: Int,

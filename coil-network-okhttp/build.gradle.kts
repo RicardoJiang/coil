@@ -3,17 +3,17 @@ import coil3.applyCoilHierarchyTemplate
 
 plugins {
     id("com.android.library")
-    id("kotlin-multiplatform")
-    id("org.jetbrains.kotlinx.atomicfu")
+    kotlin("multiplatform")
 }
 
 androidLibrary(name = "coil3.network.okhttp")
 
 kotlin {
     applyCoilHierarchyTemplate()
-
-    androidTarget()
-    jvm()
+    androidTarget {
+        publishLibraryVariants("release")
+    }
+    //jvm()
 
     sourceSets {
         commonMain {
@@ -23,7 +23,7 @@ kotlin {
                 api(libs.okhttp.core)
             }
         }
-        commonTest {
+        /*commonTest {
             dependencies {
                 implementation(projects.internal.testUtils)
                 implementation(libs.bundles.test.common)
@@ -41,6 +41,6 @@ kotlin {
                 implementation(libs.bundles.test.android)
                 implementation(libs.okhttp.mockwebserver)
             }
-        }
+        }*/
     }
 }

@@ -3,18 +3,18 @@ androidx-activity = "1.9.3"
 androidx-benchmark = "1.3.3"
 androidx-lifecycle = "2.8.7"
 androidx-tracing-perfetto = "1.0.0"
-atomicfu = "0.26.0"
-coroutines = "1.9.0"
-jetbrains-compose = "1.6.11"
-kotlin = "2.0.21"
+atomicfu = "0.23.2-KBA-001"
+coroutines = "1.8.0-KBA-001"
+jetbrains-compose = "1.6.1-KBA-007"
+kotlin = "2.0.21-KBA-009"
 ktlint = "1.3.1"
 ktor2 = "2.3.13"
 ktor3 = "3.0.1"
 okhttp = "4.12.0"
-okio = "3.9.1"
+okio = "3.9.10-KBA-001"
 paparazzi = "1.3.5"
 roborazzi = "1.34.0"
-skiko = "0.8.4"
+skiko = "0.7.97-KBA-002"
 
 [plugins]
 baselineProfile = { id = "androidx.baselineprofile", version.ref = "androidx-benchmark" }
@@ -23,6 +23,7 @@ dokka = "org.jetbrains.dokka:1.9.20"
 poko = "dev.drewhamilton.poko:0.17.2"
 screenshot = "com.android.compose.screenshot:0.0.1-alpha08"
 spotless = "com.diffplug.spotless:6.25.0"
+kotlin-multiplatform = { id = "org.jetbrains.kotlin.multiplatform", version.ref = "kotlin" }
 
 [libraries]
 gradlePlugin-android = "com.android.tools.build:gradle:8.7.2"
@@ -72,8 +73,9 @@ kotlin-stdlib = { module = "org.jetbrains.kotlin:kotlin-stdlib" }
 kotlin-test = { module = "org.jetbrains.kotlin:kotlin-test" }
 kotlin-test-junit = { module = "org.jetbrains.kotlin:kotlin-test-junit" }
 
-kotlinx-datetime = "org.jetbrains.kotlinx:kotlinx-datetime:0.6.1"
-kotlinx-serialization-json = "org.jetbrains.kotlinx:kotlinx-serialization-json:1.7.3"
+kotlinx-atomicfu = { group = "org.jetbrains.kotlinx", name = "atomicfu", version.ref = "atomicfu" }
+kotlinx-datetime = "org.jetbrains.kotlinx:kotlinx-datetime:0.6.0-RC.2-KBA-001"
+kotlinx-serialization-json = "org.jetbrains.kotlinx:kotlinx-serialization-json:1.7.1-KBA-002"
 
 ktor2-core = { module = "io.ktor:ktor-client-core", version.ref = "ktor2" }
 ktor2-mock = { module = "io.ktor:ktor-client-mock", version.ref = "ktor2" }

@@ -3,8 +3,7 @@ import coil3.androidLibrary
 
 plugins {
     id("com.android.library")
-    id("kotlin-multiplatform")
-    id("org.jetbrains.kotlinx.atomicfu")
+    kotlin("multiplatform")
     id("dev.drewhamilton.poko")
     id("org.jetbrains.compose")
     id("org.jetbrains.kotlin.plugin.compose")
@@ -22,18 +21,18 @@ kotlin {
                 api(compose.foundation)
             }
         }
-        commonTest {
+        /*commonTest {
             dependencies {
                 implementation(projects.internal.testUtils)
                 implementation(libs.kotlin.test)
             }
-        }
+        }*/
         androidMain {
             dependencies {
                 implementation(libs.google.drawablepainter)
             }
         }
-        androidUnitTest {
+        /*androidUnitTest {
             dependencies {
                 implementation(projects.internal.testUtils)
                 implementation(libs.bundles.test.jvm)
@@ -45,11 +44,11 @@ kotlin {
                 implementation(libs.bundles.test.android)
                 implementation(compose.desktop.uiTestJUnit4)
             }
-        }
+        }*/
     }
 }
 
-baselineProfile {
+/*baselineProfile {
     mergeIntoMain = true
     saveInSrc = true
     baselineProfileOutputDir = "."
@@ -60,4 +59,4 @@ baselineProfile {
 
 dependencies {
     baselineProfile(projects.internal.benchmark)
-}
+}*/

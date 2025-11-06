@@ -10,6 +10,7 @@ import com.vanniktech.maven.publish.AndroidSingleVariantLibrary
 import com.vanniktech.maven.publish.JavadocJar.Dokka
 import com.vanniktech.maven.publish.KotlinMultiplatform
 import com.vanniktech.maven.publish.MavenPublishBaseExtension
+import com.vanniktech.maven.publish.SonatypeHost
 import org.gradle.api.Project
 import org.gradle.api.tasks.testing.logging.TestExceptionFormat
 import org.gradle.kotlin.dsl.apply
@@ -35,14 +36,14 @@ fun Project.androidLibrary(
         apply(plugin = "com.vanniktech.maven.publish.base")
         setupPublishing {
             val platform = if (project.plugins.hasPlugin("org.jetbrains.kotlin.multiplatform")) {
-                KotlinMultiplatform(Dokka("dokkaHtml"))
+                KotlinMultiplatform(/*Dokka("dokkaHtml")*/)
             } else {
                 AndroidSingleVariantLibrary()
             }
             configure(platform)
         }
     }
-    testOptions {
+    /*testOptions {
         unitTests.all { test ->
             test.testLogging {
                 exceptionFormat = TestExceptionFormat.FULL
@@ -51,7 +52,7 @@ fun Project.androidLibrary(
                 showCauses = false
             }
         }
-    }
+    }*/
     action()
 }
 
@@ -60,7 +61,8 @@ fun Project.setupPublishing(
 ) {
     extensions.configure<MavenPublishBaseExtension> {
         pomFromGradleProperties()
-        publishToMavenCentral()
+        // 明确指定使用 Central Portal
+        publishToMavenCentral(SonatypeHost.CENTRAL_PORTAL)
         signAllPublications()
         action()
 

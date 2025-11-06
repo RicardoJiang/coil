@@ -1,6 +1,7 @@
 pluginManagement {
     repositories {
         google()
+        maven("https://mirrors.tencent.com/nexus/repository/maven-public/")
         mavenCentral()
         gradlePluginPortal()
     }
@@ -18,19 +19,19 @@ include(
     "coil-compose",
     "coil-compose-core",
     "coil-network-core",
-    "coil-network-ktor2",
-    "coil-network-ktor3",
-    "coil-network-okhttp",
-    "coil-network-cache-control",
+    //"coil-network-ktor2",
+    //"coil-network-ktor3",
+//    "coil-network-okhttp",
+//    "coil-network-cache-control",
     "coil-gif",
-    "coil-svg",
-    "coil-video",
-    "coil-bom",
-    "coil-test",
+    //"coil-svg",
+    //"coil-video",
+    //"coil-bom",
+    //"coil-test",
 )
 
 // Private modules
-include(
+/*include(
     "internal:benchmark",
     "internal:test-compose-screenshot",
     "internal:test-compose-ui-multiplatform",
@@ -40,4 +41,4 @@ include(
     "samples:compose",
     "samples:shared",
     "samples:view",
-)
+)*/

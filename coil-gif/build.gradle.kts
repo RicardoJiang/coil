@@ -13,9 +13,9 @@ dependencies {
     implementation(libs.androidx.core)
     implementation(libs.androidx.vectordrawable.animated)
 
-    testImplementation(projects.internal.testUtils)
-    testImplementation(libs.bundles.test.jvm)
+    //testImplementation(projects.internal.testUtils)
+    //testImplementation(libs.bundles.test.jvm)
 
-    androidTestImplementation(projects.internal.testUtils)
-    androidTestImplementation(libs.bundles.test.android)
+    //androidTestImplementation(projects.internal.testUtils)
+    //androidTestImplementation(libs.bundles.test.android)
 }

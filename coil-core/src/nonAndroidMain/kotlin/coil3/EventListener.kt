@@ -66,11 +66,11 @@ actual abstract class EventListener : ImageRequest.Listener {
         actual fun create(request: ImageRequest): EventListener
 
         actual companion object {
-            @JvmField actual val NONE = Factory { EventListener.NONE }
+            actual val NONE = Factory { EventListener.NONE }
         }
     }
 
     actual companion object {
-        @JvmField actual val NONE = object : EventListener() {}
+         actual val NONE = object : EventListener() {}
     }
 }
