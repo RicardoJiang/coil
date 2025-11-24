@@ -1,35 +1,68 @@
-﻿![Coil](logo.svg)
+# Coil - 鸿蒙适配版
 
-An image loading library for [Android](https://www.android.com/) and [Compose Multiplatform](https://www.jetbrains.com/lp/compose-multiplatform/). Coil is:
+![Coil](logo.svg)
 
-- **Fast**: Coil performs a number of optimizations including memory and disk caching, downsampling the image, automatically pausing/cancelling requests, and more.
-- **Lightweight**: Coil only depends on Kotlin, Coroutines, and Okio and works seamlessly with Google's R8 code shrinker.
-- **Easy to use**: Coil's API leverages Kotlin's language features for simplicity and minimal boilerplate.
-- **Modern**: Coil is Kotlin-first and interoperates with modern libraries including Compose, Coroutines, Okio, OkHttp, and Ktor.
+适配 **Android**、**iOS**、和 **鸿蒙 NEXT** 的图片平台。
 
-Coil is an acronym for: **Co**routine **I**mage **L**oader.
+基于 Coil 3.0.x 及 OvCompose，新增鸿蒙平台支持，使用原生 C API 实现最佳性能。
 
-Translations: [日本語](README-ja.md), [한국어](README-ko.md), [Русский](README-ru.md), [Svenska](README-sv.md), [Türkçe](README-tr.md), [中文](README-zh.md)
+## 特性
 
-## Quick Start
+- ✅ **多平台支持**：Android、iOS、鸿蒙 NEXT
+- ✅ **鸿蒙原生解码**：使用 `OH_ImageSourceNative` 原生 API
+- ✅ **Compose Multiplatform**：基于 OvCompose 完整支持 Compose 跨平台 UI
+- ✅ **图片格式**：PNG、JPEG、WebP等
 
-Import the Compose library and a [networking library](https://coil-kt.github.io/coil/network/):
+## 快速开始
 
-```kotlin
-implementation("io.coil-kt.coil3:coil-compose:3.0.4")
-implementation("io.coil-kt.coil3:coil-network-okhttp:3.0.4")
-```
+### 1. 添加依赖
 
-To load an image, use the `AsyncImage` composable:
+在 `build.gradle.kts` 中添加：
 
 ```kotlin
-AsyncImage(
-    model = "https://example.com/image.jpg",
-    contentDescription = null,
-)
+kotlin {
+    sourceSets {
+        commonMain.dependencies {
+            implementation("io.github.ricardojiang:coil-core:3.0.4-KBA-001")
+            implementation("io.github.ricardojiang:coil-compose:3.0.4-KBA-001")
+        }
+    }
+}
 ```
 
-Check out Coil's [full documentation here](https://coil-kt.github.io/coil/getting_started/).
+### 2. 使用 Compose 加载图片
+
+```kotlin
+import coil3.compose.AsyncImage
+
+@Composable
+fun MyImage() {
+    AsyncImage(
+        model = "https://example.com/image.jpg",
+        contentDescription = "图片描述",
+    )
+}
+```
+
+### 3. 配置 ImageLoader
+由于 Ktor 未适配鸿蒙，因此需要自定义 ImageLoader，具体可见项目：[https://github.com/RicardoJiang/now-in-kotlin](https://github.com/RicardoJiang/now-in-kotlin)
+
+```kotlin
+fun createImageLoader(context: PlatformContext): ImageLoader {
+    return ImageLoader.Builder(context)
+        .components {
+            // 添加自定义的 KmpNetworkFetcher
+            add(KmpNetworkFetcher.Factory())
+        }
+        .memoryCache {
+            MemoryCache.Builder()
+                .maxSizePercent(context, 0.25) // 使用 25% 的可用内存
+                .build()
+        }
+        .logger(DebugLogger()) // 开发时启用日志
+        .build()
+}
+```
 
 ## License
 
