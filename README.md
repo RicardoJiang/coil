@@ -25,8 +25,8 @@
 kotlin {
     sourceSets {
         commonMain.dependencies {
-            implementation("io.github.ricardojiang:coil-core:3.0.4-KBA-002")
-            implementation("io.github.ricardojiang:coil-compose:3.0.4-KBA-002")
+            implementation("io.github.ricardojiang:coil-core:3.0.4-KBA-003")
+            implementation("io.github.ricardojiang:coil-compose:3.0.4-KBA-003")
         }
     }
 }

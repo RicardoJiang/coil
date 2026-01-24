@@ -214,24 +214,31 @@ class OhosImageDecoder(
                 maxSize = options.maxBitmapSize,
             )
 
+            // 计算保持宽高比的缩放倍数
+            // 这一步至关重要：确保解码后的图片不会变形
+            var multiplier = DecodeUtils.computeSizeMultiplier(
+                srcWidth = originalWidth,
+                srcHeight = originalHeight,
+                dstWidth = dstWidth,
+                dstHeight = dstHeight,
+                scale = options.scale,
+            )
+
             // 应用 Precision 策略
             // 如果是 INEXACT 模式，禁止上采样（upscaling），只允许下采样
             // 这样可以避免小图片被放大而浪费内存
-            val finalWidth = if (options.precision == Precision.INEXACT) {
-                dstWidth.coerceAtMost(originalWidth)
-            } else {
-                dstWidth
+            if (options.precision == Precision.INEXACT) {
+                multiplier = multiplier.coerceAtMost(1.0)
             }
-            val finalHeight = if (options.precision == Precision.INEXACT) {
-                dstHeight.coerceAtMost(originalHeight)
-            } else {
-                dstHeight
-            }
+
+            // 根据缩放倍数计算最终的解码尺寸（保持宽高比）
+            val outWidth = (multiplier * originalWidth).toInt()
+            val outHeight = (multiplier * originalHeight).toInt()
 
             // 设置目标解码尺寸（下采样）
             val desiredSize = alloc<Image_Size>()
-            desiredSize.width = finalWidth.toUInt()
-            desiredSize.height = finalHeight.toUInt()
+            desiredSize.width = outWidth.toUInt()
+            desiredSize.height = outHeight.toUInt()
             OH_DecodingOptions_SetDesiredSize(it, desiredSize.ptr)
         }
 
