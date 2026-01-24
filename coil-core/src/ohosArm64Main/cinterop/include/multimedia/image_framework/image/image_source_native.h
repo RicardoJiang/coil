@@ -118,6 +118,124 @@ Image_ErrorCode OH_ImageSourceNative_ModifyImageProperty(OH_ImageSourceNative *s
 Image_ErrorCode OH_DecodingOptions_Create(OH_DecodingOptions **options);
 
 /**
+ * @brief Get pixelFormat number for OH_DecodingOptions struct.
+ *
+ * @param  options The OH_DecodingOptions pointer will be operated.
+ * @param pixelFormat the number of image pixelFormat.
+ * @return Returns {@link Image_ErrorCode}
+ * @since 12
+ */
+Image_ErrorCode OH_DecodingOptions_GetPixelFormat(OH_DecodingOptions *options,
+    int32_t *pixelFormat);
+
+/**
+ * @brief Set pixelFormat number for OH_DecodingOptions struct.
+ *
+ * @param  options The OH_DecodingOptions pointer will be operated.
+ * @param pixelFormat the number of image pixelFormat.
+ * @return Returns {@link Image_ErrorCode}
+ * @since 12
+ */
+Image_ErrorCode OH_DecodingOptions_SetPixelFormat(OH_DecodingOptions *options,
+    int32_t pixelFormat);
+
+/**
+ * @brief Get index number for OH_DecodingOptions struct.
+ *
+ * @param  options The OH_DecodingOptions pointer will be operated.
+ * @param index the number of image index.
+ * @return Returns {@link Image_ErrorCode}
+ * @since 12
+ */
+Image_ErrorCode OH_DecodingOptions_GetIndex(OH_DecodingOptions *options, uint32_t *index);
+
+/**
+ * @brief Set index number for OH_DecodingOptions struct.
+ *
+ * @param  options The OH_DecodingOptions pointer will be operated.
+ * @param index the number of image index.
+ * @return Returns {@link Image_ErrorCode}
+ * @since 12
+ */
+Image_ErrorCode OH_DecodingOptions_SetIndex(OH_DecodingOptions *options, uint32_t index);
+
+/**
+ * @brief Get rotate number for OH_DecodingOptions struct.
+ *
+ * @param  options The OH_DecodingOptions pointer will be operated.
+ * @param rotate the number of image rotate.
+ * @return Returns {@link Image_ErrorCode}
+ * @since 12
+ */
+Image_ErrorCode OH_DecodingOptions_GetRotate(OH_DecodingOptions *options, float *rotate);
+
+/**
+ * @brief Set rotate number for OH_DecodingOptions struct.
+ *
+ * @param  options The OH_DecodingOptions pointer will be operated.
+ * @param rotate the number of image rotate.
+ * @return Returns {@link Image_ErrorCode}
+ * @since 12
+ */
+Image_ErrorCode OH_DecodingOptions_SetRotate(OH_DecodingOptions *options, float rotate);
+
+/**
+ * @brief Get desiredSize number for OH_DecodingOptions struct.
+ *
+ * @param  options The OH_DecodingOptions pointer will be operated.
+ * @param desiredSize the number of image desiredSize.
+ * @return Returns {@link Image_ErrorCode}
+ * @since 12
+ */
+Image_ErrorCode OH_DecodingOptions_GetDesiredSize(OH_DecodingOptions *options,
+    Image_Size *desiredSize);
+
+/**
+ * @brief Set desiredSize number for OH_DecodingOptions struct.
+ *
+ * @param  options The OH_DecodingOptions pointer will be operated.
+ * @param desiredSize the number of image desiredSize.
+ * @return Returns {@link Image_ErrorCode}
+ * @since 12
+ */
+Image_ErrorCode OH_DecodingOptions_SetDesiredSize(OH_DecodingOptions *options,
+    Image_Size *desiredSize);
+
+/**
+ * @brief Set desiredRegion number for OH_DecodingOptions struct.
+ *
+ * @param  options The OH_DecodingOptions pointer will be operated.
+ * @param desiredRegion the number of image desiredRegion.
+ * @return Returns {@link Image_ErrorCode}
+ * @since 12
+ */
+Image_ErrorCode OH_DecodingOptions_GetDesiredRegion(OH_DecodingOptions *options,
+    Image_Region *desiredRegion);
+
+/**
+ * @brief Set desiredRegion number for OH_DecodingOptions struct.
+ *
+ * @param  options The OH_DecodingOptions pointer will be operated.
+ * @param desiredRegion the number of image desiredRegion.
+ * @return Returns {@link Image_ErrorCode}
+ * @since 12
+ */
+Image_ErrorCode OH_DecodingOptions_SetDesiredRegion(OH_DecodingOptions *options,
+    Image_Region *desiredRegion);
+
+/**
+ * @brief Set desiredDynamicRange number for OH_DecodingOptions struct.
+ *
+ * @param options The OH_DecodingOptions pointer will be operated. Pointer connot be null.
+ * @param desiredDynamicRange the number of desired dynamic range {@link IMAGE_DYNAMIC_RANGE}. Pointer connot be null.
+ * @return Returns {@link Image_ErrorCode} IMAGE_SUCCESS - The operation is successful.
+ * returns {@link Image_ErrorCode} IMAGE_BAD_PARAMETER - Parameter error.Possible causes:Parameter verification failed.
+ * @since 12
+ */
+Image_ErrorCode OH_DecodingOptions_GetDesiredDynamicRange(OH_DecodingOptions *options,
+    int32_t *desiredDynamicRange);
+
+/**
  * @brief Sets desired dynamic range for decoding.
  */
 Image_ErrorCode OH_DecodingOptions_SetDesiredDynamicRange(OH_DecodingOptions *options,

@@ -1,3 +1,4 @@
 package = platform.ohos.image
 headers = multimedia/image_framework/image/image_common.h multimedia/image_framework/image/image_source_native.h multimedia/image_framework/image/pixelmap_native.h
+headerFilter = multimedia/image_framework/image/*
 linkerOpts = -limage_source -lpixelmap

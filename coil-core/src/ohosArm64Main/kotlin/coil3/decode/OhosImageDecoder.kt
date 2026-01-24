@@ -6,6 +6,10 @@ import coil3.ImageLoader
 import coil3.asImage
 import coil3.fetch.SourceFetchResult
 import coil3.request.Options
+import coil3.request.maxBitmapSize
+import coil3.size.Precision
+import coil3.util.component1
+import coil3.util.component2
 import kotlinx.cinterop.CPointer
 import kotlinx.cinterop.ExperimentalForeignApi
 import kotlinx.cinterop.MemScope
@@ -24,9 +28,11 @@ import org.jetbrains.skia.ImageInfo
 import platform.multimedia.Image_ErrorCode
 import platform.ohos.image.IMAGE_DYNAMIC_RANGE_AUTO
 import platform.ohos.image.IMAGE_SUCCESS
+import platform.ohos.image.Image_Size
 import platform.ohos.image.OH_DecodingOptions_Create
 import platform.ohos.image.OH_DecodingOptions_Release
 import platform.ohos.image.OH_DecodingOptions_SetDesiredDynamicRange
+import platform.ohos.image.OH_DecodingOptions_SetDesiredSize
 import platform.ohos.image.OH_ImageSourceInfo_Create
 import platform.ohos.image.OH_ImageSourceInfo_GetHeight
 import platform.ohos.image.OH_ImageSourceInfo_GetWidth
@@ -76,8 +82,8 @@ class OhosImageDecoder(
             // 3. 获取原始图片的宽高
             val (originalWidth, originalHeight) = getImageDimensions(imageSource)
 
-            // 4. 将 ImageSource 解码为 PixelMap
-            val pixelMap = decodeToPixelMap(imageSource)
+            // 4. 将 ImageSource 解码为 PixelMap（应用下采样）
+            val pixelMap = decodeToPixelMap(imageSource, originalWidth, originalHeight)
 
             try {
                 // 5. 获取解码后 PixelMap 的宽高
@@ -180,10 +186,14 @@ class OhosImageDecoder(
      * 可以通过 DecodingOptions 来控制解码参数，如动态范围、采样率等。
      *
      * @param imageSource ImageSource 指针
+     * @param originalWidth 原始图片宽度
+     * @param originalHeight 原始图片高度
      * @return PixelMap 的 C 指针
      */
     private fun MemScope.decodeToPixelMap(
-        imageSource: CPointer<cnames.structs.OH_ImageSourceNative>
+        imageSource: CPointer<cnames.structs.OH_ImageSourceNative>,
+        originalWidth: Int,
+        originalHeight: Int
     ): CPointer<cnames.structs.OH_PixelmapNative> {
         // 创建解码选项
         val decodingOptsPtr = alloc<kotlinx.cinterop.CPointerVar<cnames.structs.OH_DecodingOptions>>()
@@ -194,6 +204,35 @@ class OhosImageDecoder(
             // 设置动态范围为自动（AUTO）
             // 这样系统会根据图片内容和设备能力自动选择 SDR 或 HDR
             OH_DecodingOptions_SetDesiredDynamicRange(it, IMAGE_DYNAMIC_RANGE_AUTO.toInt())
+
+            // 计算目标尺寸（下采样）
+            val (dstWidth, dstHeight) = DecodeUtils.computeDstSize(
+                srcWidth = originalWidth,
+                srcHeight = originalHeight,
+                targetSize = options.size,
+                scale = options.scale,
+                maxSize = options.maxBitmapSize,
+            )
+
+            // 应用 Precision 策略
+            // 如果是 INEXACT 模式，禁止上采样（upscaling），只允许下采样
+            // 这样可以避免小图片被放大而浪费内存
+            val finalWidth = if (options.precision == Precision.INEXACT) {
+                dstWidth.coerceAtMost(originalWidth)
+            } else {
+                dstWidth
+            }
+            val finalHeight = if (options.precision == Precision.INEXACT) {
+                dstHeight.coerceAtMost(originalHeight)
+            } else {
+                dstHeight
+            }
+
+            // 设置目标解码尺寸（下采样）
+            val desiredSize = alloc<Image_Size>()
+            desiredSize.width = finalWidth.toUInt()
+            desiredSize.height = finalHeight.toUInt()
+            OH_DecodingOptions_SetDesiredSize(it, desiredSize.ptr)
         }
 
         try {
@@ -269,7 +308,8 @@ class OhosImageDecoder(
         // 分配 buffer size 变量
         val bufferSize = alloc<kotlinx.cinterop.ULongVar>()
         // RGBA 格式：每个像素 4 字节
-        bufferSize.value = (width * height * 4).toULong()
+        // 使用 Long 计算避免整数溢出，然后转换为 ULong
+        bufferSize.value = (width.toLong() * height.toLong() * 4L).toULong()
 
         // 创建字节数组来接收像素数据
         val pixelBuffer = ByteArray(bufferSize.value.toInt())

@@ -10,6 +10,8 @@
 
 - ✅ **多平台支持**：Android、iOS、鸿蒙 NEXT
 - ✅ **鸿蒙原生解码**：使用 `OH_ImageSourceNative` 原生 API
+- ✅ **高效下采样**：支持图片解码时自动下采样，大幅节省内存
+- ✅ **智能缩放策略**：支持 `Precision.INEXACT` 模式，防止小图片上采样
 - ✅ **Compose Multiplatform**：基于 OvCompose 完整支持 Compose 跨平台 UI
 - ✅ **图片格式**：PNG、JPEG、WebP等
 
@@ -23,8 +25,8 @@
 kotlin {
     sourceSets {
         commonMain.dependencies {
-            implementation("io.github.ricardojiang:coil-core:3.0.4-KBA-001")
-            implementation("io.github.ricardojiang:coil-compose:3.0.4-KBA-001")
+            implementation("io.github.ricardojiang:coil-core:3.0.4-KBA-002")
+            implementation("io.github.ricardojiang:coil-compose:3.0.4-KBA-002")
         }
     }
 }
